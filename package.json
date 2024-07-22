@@ -1,0 +1,22 @@
+{
+  "name": "devops-class",
+  "version": "1.0.0",
+  "description": "ief2i devops class",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "repo.git"
+  },
+  "keywords": [
+    "Devops",
+    "Nodejs",
+    "git",
+    "test",
+    "ci"
+  ],
+  "author": "viryl15",
+  "license": "ISC"
+}
