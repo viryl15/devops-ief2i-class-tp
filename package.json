@@ -4,6 +4,7 @@
   "description": "ief2i devops class",
   "main": "main.js",
   "scripts": {
+    "start": "node main.js",
     "test": "test"
   },
   "repository": {
@@ -18,5 +19,8 @@
     "ci"
   ],
   "author": "viryl15",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
