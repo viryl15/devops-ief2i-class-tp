@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,9 +17,11 @@ jobs:
         with:
           node-version: 16
 
-      # Installe les dépendances du projet
       - name: Install dependencies
         run: npm install
 
-      #run test
-      - run: npm test
+      - name: run eslint
+        run: npm  lint
+
+      - name: run test
+        run: npm test

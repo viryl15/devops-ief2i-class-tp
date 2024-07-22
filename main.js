@@ -1,12 +1,8 @@
 require('dotenv').config();
-// import 'dotenv/config';
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-
-
 const app = express();
-
 app.use(cors());
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -14,11 +10,7 @@ const db = mysql.createConnection({
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME
-    // host: "127.0.0.1",
-    // port: "3306",
-    // user: "root",
-    // password: "Argent2022",
-    // database: "bd_book"
+
 });
 
 db.connect((err) => {
@@ -77,3 +69,5 @@ app.get('/loadData', (req, res) => {
 app.listen(4200, () => {
     console.log('Backend server running on port 4200');
 });
+
+module.exports = app;
