@@ -13,8 +13,8 @@ describe('GET /books', () => {
             },
             {
                 'id': 2,
-                'title': 'Death and the King\'s Horseman',
-                'author': 'Wole Soyinka'
+                'title': 'Half of a Yellow Sun',
+                'author': 'Chimamanda Ngozi Adichie'
             },
             {
                 'id': 3,
@@ -28,8 +28,8 @@ describe('GET /books', () => {
             },
             {
                 'id': 5,
-                'title': 'Half of a Yellow Sun',
-                'author': 'Chimamanda Ngozi Adichie'
+                'title': 'Death and the King\'s Horseman',
+                'author': 'Wole Soyinka'
             }
         ]);
     });
