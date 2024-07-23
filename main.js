@@ -6,6 +6,7 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 
+
 // Initialize SQLite database
 const dbs = new sqlite3.Database('test.db', (err) => {
     if (err) {
@@ -63,8 +64,10 @@ app.get('/loadData', async (req, res) => {
     }
 });
 
-app.listen(4200, () => {
+let server = app.listen(4200, () => {
     console.log('Backend server running on port 4200');
 });
 
-module.exports = app;
+
+
+module.exports = {server, app};

@@ -1,5 +1,10 @@
 const request = require('supertest');
-const app = require('../main');
+const {server, app} = require('../main');
+
+
+afterAll(() => {
+    server.close()
+})
 
 describe('GET /books', () => {
     it('should return a list of books', async () => {
