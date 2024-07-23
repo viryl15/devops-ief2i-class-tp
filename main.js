@@ -1,37 +1,36 @@
-require('dotenv').config();
+const sqlite3 = require('sqlite3').verbose();
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql2');
+require('dotenv').config();
+
 const app = express();
 app.use(cors());
-const db = mysql.createConnection({
-    host: process.env.DATABASE_HOST,
-    port: process.env.PORT,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME
 
-});
-
-db.connect((err) => {
+// Initialize SQLite database
+const dbs = new sqlite3.Database('test.db', (err) => {
     if (err) {
-        console.error('Error connecting to MySQL', err);
-        return;
+        console.error('Error opening database:', err.message);
+    } else {
+        console.log('Connected to SQLite database.');
+        dbs.serialize(() => {
+            dbs.run('CREATE TABLE IF NOT EXISTS Books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, author TEXT NOT NULL)');
+        });
     }
-    console.log('Connected to MySQL');
 });
 
+// Get all books
 app.get('/books', (req, res) => {
-    db.query('SELECT * FROM Books', (err, results) => {
+    dbs.all('SELECT * FROM Books', [], (err, rows) => {
         if (err) {
-            res.status(500).send(err);
+            console.error('Error querying database:', err.message);
+            res.status(500).send(err.message);
         } else {
-            res.json(results);
+            res.json(rows);
         }
     });
 });
 
-
+// Load initial data into the database
 const africanBooks = [
     { title: 'Things Fall Apart', author: 'Chinua Achebe' },
     { title: 'Death and the King\'s Horseman', author: 'Wole Soyinka' },
@@ -40,30 +39,28 @@ const africanBooks = [
     { title: 'Half of a Yellow Sun', author: 'Chimamanda Ngozi Adichie' }
 ];
 
-app.get('/loadData', (req, res) => {
+app.get('/loadData', async (req, res) => {
     const queries = africanBooks.map(book => {
         const { title, author } = book;
         return new Promise((resolve, reject) => {
             const query = 'INSERT INTO Books (title, author) VALUES (?, ?)';
-            db.query(query, [title, author], (err, results) => {
+            dbs.run(query, [title, author], function (err) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(results);
+                    resolve(this.lastID);
                 }
             });
         });
     });
 
-    // Exécuter toutes les requêtes d'insertion
-    Promise.all(queries)
-        .then(() => {
-            res.send('Data loaded successfully!');
-        })
-        .catch(err => {
-            console.error('Error loading data:', err);
-            res.status(500).send(err);
-        });
+    try {
+        await Promise.all(queries);
+        res.send('Data loaded successfully!');
+    } catch (err) {
+        console.error('Error loading data:', err.message);
+        res.status(500).send(err.message);
+    }
 });
 
 app.listen(4200, () => {
