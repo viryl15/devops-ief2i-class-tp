@@ -10,6 +10,25 @@
     "sourceType": "module"
   },
   "rules": {
-    "quotes": ["error", "single"]
+    "quotes": ["error", "single"],
+    "indent": ["error", 4],
+    "prefer-const": "error",
+    "semi": ["error", "always"],
+    "no-console": "off",
+    "no-unused-vars": "warn",
+    "no-undef": "error",
+    "no-var": "error",
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "never"],
+    "comma-dangle": ["error", "only-multiline"],
+    "no-extra-semi": "error",
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "no-trailing-spaces": "error",
+    "handle-callback-err": "error",
+    "no-mixed-requires": "error",
+    "no-new-require": "error",
+    "no-path-concat": "error",
+    "no-process-env": "error",
+    "no-sync": "error"
   }
 }
